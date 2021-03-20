@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Тест приема сообщений</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io.connect('http://localhost:8080');
+
+      socket.on('broadcast', function(msg) {
+        const messages = document.getElementById('messages');
+        messages.appendChild(msg);
+        console.log(msg);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="messages"></div>
+  </body>
+</html>
