@@ -20,7 +20,12 @@ const serverPort = 443;
 const server = https.createServer(options, app);
 const io = require('socket.io')(server);
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://muskulspb.ru',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
@@ -40,4 +45,5 @@ io.on('connection', socket => {
 
 server.listen(serverPort, function() {
   console.log('server up and running at %s port', serverPort);
+  console.log('IP %s', ip);
 });
