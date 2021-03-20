@@ -18,7 +18,24 @@ const options = {
 const serverPort = 443;
 
 const server = https.createServer(options, app);
-const io = require('socket.io')(server);
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'https://muskulspb.ru',
+    methods: ['GET', 'POST'],
+  },
+});
+
+// app.use(function(req, res, next) {
+//   res.setHeader('Access-Control-Allow-Origin', 'https://muskulspb.ru');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+//   res.setHeader(
+//     'Access-Control-Allow-Headers',
+//     'X-Requested-With,content-type'
+//   );
+//   res.setHeader('Access-Control-Allow-Credentials', true);
+//   next();
+// });
 
 const corsOptions = {
   origin: 'https://muskulspb.ru',
@@ -26,17 +43,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://muskulspb.ru');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With,content-type'
-  );
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
 
 app.use(express.static('public'));
 
